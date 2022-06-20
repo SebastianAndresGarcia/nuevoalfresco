@@ -36,6 +36,7 @@ build/Release
 node_modules/
 jspm_packages/
 test/
+pdf/
 .gitlab-ci.yml
 .jsbeautifyrc.npmrc
 # Typescript v1 declaration files

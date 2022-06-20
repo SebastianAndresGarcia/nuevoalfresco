@@ -91,6 +91,7 @@ function buscardni(data) {
     if (reg.test(data.text)) {
         i++
         console.log("" + i + ")" + "DNI " + data.text.match(reg))
+        let dni=console.log(data.text.match(reg).replaceAll('dog', 'monkey'));
         return data.text.match(reg)
     } else {
         console.log("no encontró dni")
