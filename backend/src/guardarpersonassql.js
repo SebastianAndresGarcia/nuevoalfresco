@@ -10,7 +10,7 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 });*/
 
 function guardarpersona(dni, nombre, ubicacion) {
-
+//https://es.stackoverflow.com/questions/172615/mejorar-m%C3%A9todo-de-b%C3%BAsqueda-sql-server
     var sql = `INSERT INTO causas(dni, nombrecompleto, ubicacion) VALUES (?);`;
     let values = [dni, nombre, ubicacion];
 

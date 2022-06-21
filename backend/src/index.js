@@ -90,9 +90,10 @@ function buscardni(data) {
 
     if (reg.test(data.text)) {
         i++
-        console.log("" + i + ")" + "DNI " + data.text.match(reg))
-        let dni=console.log(data.text.match(reg).replaceAll('dog', 'monkey'));
-        return data.text.match(reg)
+        let dni=data.text.match(reg);
+        dni=dni.toString().replaceAll('.', '');
+        console.log("" + i + ")" + "DNI " + dni)
+        return dni
     } else {
         console.log("no encontró dni")
         return ("")
@@ -106,15 +107,20 @@ function buscarnombreyapellido(data) {
     const reg3 = /(([A-ZÁÉÍÓÚ]{1}[A-ZÁÉÍÓÚÑ(\,?)]+[\s]*)|([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú(\,?)]+[\s]*))+(?=(\,?)+(\ ?)+[D(\.?)]+[N(\.?)]+[I(\.?)])/g;
 
     if (reg3.test(data.text)) {
-        console.log("nombre y apellido " + data.text.match(reg3) + "\n")
-        return data.text.match(reg3)
+        let nombre=data.text.match(reg3);
+        nombre=nombre.toString().replaceAll(',', ''); //borra las comas
+        nombre=nombre.toString().replaceAll(/\s+/g, ' ').trim(); //borra espacios de más entre string, y si tiene espacios al inicio o al final
+        nombre=nombre.toUpperCase(); //convierte todas las letras a mayúscula
+        nombre=nombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "");//para quitar los acentos
+        console.log("nombre y apellido " + nombre + "\n")
+        return nombre
     } else {
         sinnombre++
         console.log("no encontró nombre" + "(" + sinnombre + ")" + "\n")
         return data.text.match(reg3)
     }
-
 }
+
 function guardardb(personas) {
     for (let doc=1;doc<personas.length;doc++) {
         //console.log("dentro de fcion guardardb "+personas[doc].nombrecompleto)
@@ -135,3 +141,4 @@ function guardardb(personas) {
         console.log('Close the database connection.');
       });
 }
+

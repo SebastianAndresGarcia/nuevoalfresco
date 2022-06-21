@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+table, tbody, thead, tr, th, td{
+  border-collapse: collapse;
+  border: 1px solid black;
+  padding:0.5em;
+  margin: 1em;
+}
+table > tbody:empty {
+  position: relative;
+  display: table-caption;
+  caption-side: bottom;
+  min-height: 50px;
+  background-color: rgb(240,240,240);
+  text-align: center;
+}
+table > tbody:empty:before {
+  content: 'NO SE ENCONTRARON RESULTADOS';
+  position: absolute;
+  font-size: 20px;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
