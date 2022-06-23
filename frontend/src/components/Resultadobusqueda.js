@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import { Navigation } from './Navigation';
+import Pagination from 'react-bootstrap/Pagination';
 import '../styles/App.css'
 
 export function Resultadobusqueda() {
@@ -33,7 +34,7 @@ export function Resultadobusqueda() {
                
                     <Table striped bordered hover >
                         <thead>
-                            <tr><th>#</th><th>DNI</th><th>NOMBRE Y APELLIDO</th><th></th></tr>
+                            <tr><th>#</th><th>DNI</th><th>NOMBRE Y APELLIDO</th><th>NOMBRE DE ARCHIVO</th><th></th></tr>
                         </thead>
 
                         <tbody>
@@ -43,6 +44,7 @@ export function Resultadobusqueda() {
                                     <td>{causa.id}</td> 
                                     <td>{causa.dni}</td>
                                     <td>{causa.nombrecompleto}</td>
+                                    <td>{causa.ubicacion}</td>
                                     <td><button type="button" class="btn btn-dark" onClick={() => abrirpdf(causa.ubicacion)}>VER CAUSA PDF</button>
                                     </td>
                                 </tr>

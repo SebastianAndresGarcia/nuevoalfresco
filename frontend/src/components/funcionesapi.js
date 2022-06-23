@@ -1,5 +1,6 @@
 export async function buscarcausas(termino){
-	let urlServer = 'http://localhost:3000/getcausasporbusqueda/'+termino;
+	//let urlServer = 'http://localhost:3000/getcausasporbusqueda/'+termino;
+	let urlServer = 'http://172.17.17.22:3000/getcausasporbusqueda/'+termino;
 	let response = await fetch(urlServer, {
 		method: 'GET',
         headers: {

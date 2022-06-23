@@ -26,7 +26,7 @@ export function Home() {
         <>
             <Navigation></Navigation>
             <div style={{ display: "flex", justifyContent: "center" }}>
-                <Card className="justify-content-md-center mt-5 border" style={{ width: "50%" }}>
+                <Card className="justify-content-md-center mt-5 border" style={{ width: "30%" }}>
                     <Card.Img variant="top" src={require(`../assets/images/logoudapif.jpeg`)} />
                     <Card.Body>
                         <Card.Text>
