@@ -36,7 +36,7 @@ export function Home() {
                                 arroja el mismo resultado.
                                 En caso de buscar mediante nombre de la persona, se sugiere ingresar al menos dos palabras para acotar la búsqueda.
                             </p>
-                            <p> Próximamente se habilitará la búsqueda de causas por número de teléfono y número de CBU/CVU</p>
+                            <p style={{textAlign: "justify", fontFamily:"Georgia" }}> Próximamente se habilitará la búsqueda de causas por número de teléfono y número de CBU/CVU</p>
                         </Card.Text>
                     </Card.Body>
                 </Card>

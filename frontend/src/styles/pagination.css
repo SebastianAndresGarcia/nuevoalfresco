@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: system-ui;
+}
+.paginador {
+    
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    /*gap: 50px;*/
+}
+p {
+    
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    padding-left: 3px 0;
+    padding-right: 3px;
+    /*background-color: #201f1f;*/
+    color: rgb(7, 6, 6);
+}
+.button{
+    color: aqua;
+    border-color: blue;
+}

@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useState, useEffect } from 'react';
+import { Image } from 'react-bootstrap';
 
 export function Navigation() {
 
@@ -40,7 +41,7 @@ export function Navigation() {
         <>
             <Navbar bg="primary" className="navbar navbar-dark bg-dark" >
                 <Container fluid>
-                    <Navbar.Brand href="/Home">ALFRESCO 2.0</Navbar.Brand>
+                    <Navbar.Brand href="/Home" style={{marginLeft:"20px"}}><img src={require(`../assets/images/logoudapif.jpeg`)} alt={"logo"} style={{ width: "150px" }} /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
@@ -50,7 +51,7 @@ export function Navigation() {
                         >
 
                             <Nav.Link href="#action2">Bienvenido Usuario UDAPIF</Nav.Link>
-                            <NavDropdown title="Opciones" id="navbarScrollingDropdown">
+                            {/*  <NavDropdown title="Opciones" id="navbarScrollingDropdown">
                                 <NavDropdown.Item href="#action3">Proximamente</NavDropdown.Item>
                                 <NavDropdown.Item href="#action4">
                                     Proximamente
@@ -59,7 +60,7 @@ export function Navigation() {
                                 <NavDropdown.Item href="#action5">
                                     En desarrollo
                                 </NavDropdown.Item>
-                            </NavDropdown>
+    </NavDropdown>*/}
 
                         </Nav>
                         <Form className="form-inline my-2 my-lg-0" onSubmit={enviarDatos}>
