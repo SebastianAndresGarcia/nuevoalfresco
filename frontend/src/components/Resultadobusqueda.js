@@ -16,10 +16,12 @@ export function Resultadobusqueda() {
     console.log("término de búsqueda recuperado useParams: " + terminobusqueda);
 
     const [causas, setCausas] = useState([])
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
-        fetch('http://localhost:3000/getcausasporbusqueda/' + terminobusqueda)
+        fetch('http://172.17.17.22:3000/getcausasporbusqueda/' + terminobusqueda)
             .then(response => response.json())
-            .then(setCausas)
+            .then(data => {setCausas(data); setLoading(false)})
 
     }, [])
     const [pagina, setPagina] = useState(1);
@@ -32,8 +34,13 @@ export function Resultadobusqueda() {
 
     const abrirpdf = async (ubicacion) => {
 
-        window.open("http://127.0.0.1:8887/" + ubicacion, '_blank')
+        window.open("http://172.17.17.22:8887/" + ubicacion, '_blank')
         //window.location.href=`file:///C:/Users/hp/Documents/tecnicatura/nuevoalfresco/backend/`+ubicacion
+    }
+    if(loading){
+        return (
+            <h1>Cargando ... </h1>
+        )
     }
     return (
         <>

@@ -30,8 +30,8 @@ export function Home() {
                     <Card.Img variant="top" src={require(`../assets/images/logoudapif.jpeg`)} />
                     <Card.Body>
                         <Card.Text>
-                            <h3 style={{textAlign: "center" }}><b>BUSQUEDA DE CAUSAS EN UFIS</b></h3>
-                            <p style={{textAlign: "justify", fontFamily:"Georgia" }}>En caso de realizar una búsqueda por número de DNI, el sistema entiende como equivalente el ingreso de un número
+                            <h2 style={{textAlign: "center" }}><b>BUSQUEDA DE CAUSAS EN UFIS</b></h2>
+                            <p style={{textAlign: "justify", fontFamily:"Georgia", fontSize: "x-large" }}>En caso de realizar una búsqueda por número de DNI, el sistema entiende como equivalente el ingreso de un número
                                 con puntos o sin puntos, por lo que el resultado al ingresar un número con la forma XX<b>.</b>XXX<b>.</b>XXX o XXXXXXXX o XX<b>.</b>XXXXXX
                                 arroja el mismo resultado.
                                 En caso de buscar mediante nombre de la persona, se sugiere ingresar al menos dos palabras para acotar la búsqueda.
