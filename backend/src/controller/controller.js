@@ -26,6 +26,7 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
     var arrayDenombre = [] = nombrecompleto.split(" ");
 
     if (arrayDenombre.length <= 1) {
+        try{
         conexion.query("SELECT * FROM causas WHERE dni = ? OR nombrecompleto LIKE '%" + nombrecompleto + "%'", [dni], function (err, results, fields) {
 
             results.forEach((result) => {
@@ -33,10 +34,32 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
             })
             if (err) console.error(err);
             //console.log('User Query Results: ', results);
-            res.send(personas)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
+            res.status(200).send(personas)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
             console.log(personas)
         });
+    }catch(err){
+        console.log(err)
+    }
     } else {
+        let sql = "SELECT * FROM causas WHERE nombrecompleto LIKE '%" + arrayDenombre[0] + "%' ";
+        for (let i = 1; i < arrayDenombre.length; i++) {
+            sql = sql + "AND nombrecompleto LIKE '%" + arrayDenombre[i] + "%' "
+        }
+        //console.log("sqlquery: "+sql)
+        try {
+            conexion.query(sql, function (err, results, fields) {
+                results.forEach((result) => {
+                    personas.push(JSON.parse(JSON.stringify(result)))
+                })
+                if (err) console.error(err);
+                //console.log('User Query Results: ', results);
+                res.status(200).send(personas)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
+                console.log(personas)
+            });
+        } catch (err) {
+            console.log(err)
+        }
+        /*
         console.log("cantidad de palabras de nombre " + arrayDenombre.length);
         conexion.query("SELECT * FROM causas", function (err, results, fields) {
 
@@ -61,7 +84,10 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
             res.send(personasresult)
             console.log(personasresult)
         });
+    */
+
     }
 });
 exports.getcausasporbusqueda = getcausasporbusqueda;
+
 

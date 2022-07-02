@@ -1,12 +1,12 @@
 //https://www.geeksforgeeks.org/node-js-mysql-insert-into-table/    , ver esto para modularizar
 
-var mysql = require('mysql');
+const mysql = require('mysql2');
 
 
 var con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'mysql',
+    password: '12345',
     database: 'causasenufi',
     port: 3306,
     connectionLimit: 100 //100 es el valor por defecto
