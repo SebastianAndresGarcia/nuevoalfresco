@@ -51,6 +51,7 @@ export function Navigation() {
                         >
 
                             <Nav.Link href="#action2">Bienvenido Usuario UDAPIF</Nav.Link>
+                            <Nav.Link href="/cargarnuevascausas">CARGAR CAUSAS</Nav.Link>
                             {/*  <NavDropdown title="Opciones" id="navbarScrollingDropdown">
                                 <NavDropdown.Item href="#action3">Proximamente</NavDropdown.Item>
                                 <NavDropdown.Item href="#action4">
@@ -75,7 +76,7 @@ export function Navigation() {
                                         name="termino"
 
                                     /></div>
-                                <div class="col"> <Button className="btn btn-outline-success my-2 my-sm-0" type="submit" variant="outline-success" >Buscar Causas</Button></div>
+                                <div class="col"> <Button className="btn btn-success my-2 my-sm-0" type="submit" variant="success" >Buscar Causas</Button></div>
                             </div>
 
                         </Form>

@@ -50,7 +50,7 @@ export function Resultadobusqueda() {
 
                 <Table striped bordered hover >
                     <thead>
-                        <tr><th>DNI</th><th>NOMBRE Y APELLIDO</th><th>NOMBRE DE ARCHIVO</th><th></th></tr>
+                        <tr><th>DNI</th><th>NOMBRE Y APELLIDO</th><th>NOMBRE DE ARCHIVO</th><th>FECHA</th><th></th></tr>
                     </thead>
 
                     <tbody>
@@ -64,6 +64,7 @@ export function Resultadobusqueda() {
                                 <td>{causa.dni}</td>
                                 <td>{causa.nombrecompleto}</td>
                                 <td>{causa.ubicacion}</td>
+                                <td>{causa.fecha}</td>
                                 <td><button type="button" class="btn btn-dark" onClick={() => abrirpdf(causa.ubicacion)}>VER CAUSA PDF</button>
                                 </td>
                             </tr>
