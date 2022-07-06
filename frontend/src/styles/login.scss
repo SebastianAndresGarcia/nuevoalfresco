@@ -1,0 +1,43 @@
+html, body {
+    min-height: 100vh;
+    width: 100%;
+    //padding: 20px;
+  }
+  .section-container {
+      padding: 20px;
+      min-height: 100vh;
+      background: rgb(250, 250, 252);
+      width: 100%;
+      box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+      box-sizing: border-box;
+      .row {
+       
+        max-width: 1000px;
+        margin: 0 auto;
+        min-height: 90vh;
+        box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+        .left {
+          padding: 30px;
+          justify-content: center;
+          align-items: center;
+          box-sizing: border-box;
+          display: flex;
+          color: #1e74f5;
+          background-color: #04348d;
+        }
+        .right {
+          padding: 30px;
+          box-sizing: border-box;
+          background: #1e74f5;
+          color: #fff;
+          h3 {
+            text-align: center;
+            margin: 30px 0;
+          }
+          .signin-btn {
+            width: 100%;
+            color: #1963d8;
+          }
+        }
+      }
+    }

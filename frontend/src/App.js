@@ -3,7 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Home} from './components/Home';
 import {Resultadobusqueda} from './components/Resultadobusqueda';
 import { Cargarnuevascausas } from './components/cargarnuevascausas';
+import { Login } from './components/Login';
 import './styles/App.css'
+
 function App() {
   return (
     <BrowserRouter>
@@ -12,6 +14,7 @@ function App() {
         <Route path='/Home' element={<Home/>}/>
         <Route path='/resultadobusqueda/:termino' element={<Resultadobusqueda/>}/>
         <Route path='/cargarnuevascausas' element={<Cargarnuevascausas/>}/>
+        <Route path='/login' element={<Login/>}/>
       </Routes>
     </BrowserRouter>
     )

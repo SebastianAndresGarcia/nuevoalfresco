@@ -26,15 +26,7 @@ export function Navigation() {
         console.log('enviando datos...' + datos.termino)
         window.location.href = `/resultadobusqueda/` + datos.termino
     }
-    /*const [content, setContent] = useState({termino:'hola'})
-    useEffect(() => {
-        setContent({
-            
-            termino: ""
-        })
-    }, [])*/
-
-
+  
 
     return (
 
@@ -52,16 +44,7 @@ export function Navigation() {
 
                             <Nav.Link href="#action2">Bienvenido Usuario UDAPIF</Nav.Link>
                             <Nav.Link href="/cargarnuevascausas">CARGAR CAUSAS</Nav.Link>
-                            {/*  <NavDropdown title="Opciones" id="navbarScrollingDropdown">
-                                <NavDropdown.Item href="#action3">Proximamente</NavDropdown.Item>
-                                <NavDropdown.Item href="#action4">
-                                    Proximamente
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action5">
-                                    En desarrollo
-                                </NavDropdown.Item>
-    </NavDropdown>*/}
+                           
 
                         </Nav>
                         <Form className="form-inline my-2 my-lg-0" onSubmit={enviarDatos}>

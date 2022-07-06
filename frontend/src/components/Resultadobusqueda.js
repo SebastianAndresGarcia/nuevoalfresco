@@ -21,23 +21,32 @@ export function Resultadobusqueda() {
     useEffect(() => {
         fetch('http://172.17.17.22:3000/getcausasporbusqueda/' + terminobusqueda)
             .then(response => response.json())
-            .then(data => {setCausas(data); setLoading(false)})
+            .then(data => { setCausas(data); setLoading(false) })
 
     }, [])
     const [pagina, setPagina] = useState(1);
     const [porPagina, setPorPagina] = useState(10);
 
     //const [maximo, setMaximo] = useState(1) 
-    const maximo=Math.ceil(causas.length / porPagina);
-    console.log("porPagina "+porPagina +"; causas.length "+causas.length)
+    const maximo = Math.ceil(causas.length / porPagina);
+    console.log("porPagina " + porPagina + "; causas.length " + causas.length)
 
+    function formatDate(data) {
+        let date
+        if (data !== null) {
+            date = new Date(data)
+            return date.toLocaleDateString("es-AR")
+        } else {
+            return ""
+        }
+    }
 
     const abrirpdf = async (ubicacion) => {
 
         window.open("http://172.17.17.22:8887/" + ubicacion, '_blank')
         //window.location.href=`file:///C:/Users/hp/Documents/tecnicatura/nuevoalfresco/backend/`+ubicacion
     }
-    if(loading){
+    if (loading) {
         return (
             <h1>Cargando ... </h1>
         )
@@ -50,7 +59,7 @@ export function Resultadobusqueda() {
 
                 <Table striped bordered hover >
                     <thead>
-                        <tr><th>DNI</th><th>NOMBRE Y APELLIDO</th><th>NOMBRE DE ARCHIVO</th><th>FECHA</th><th></th></tr>
+                        <tr><th>DNI</th><th>NOMBRE Y APELLIDO</th><th>NOMBRE DE ARCHIVO</th><th>FECHA DE INFORME</th><th></th></tr>
                     </thead>
 
                     <tbody>
@@ -64,7 +73,7 @@ export function Resultadobusqueda() {
                                 <td>{causa.dni}</td>
                                 <td>{causa.nombrecompleto}</td>
                                 <td>{causa.ubicacion}</td>
-                                <td>{causa.fecha}</td>
+                                <td>{formatDate(causa.fecha)}</td>
                                 <td><button type="button" class="btn btn-dark" onClick={() => abrirpdf(causa.ubicacion)}>VER CAUSA PDF</button>
                                 </td>
                             </tr>
@@ -77,33 +86,13 @@ export function Resultadobusqueda() {
                     </tbody>
 
                 </Table>
-               
+
                 {/*causa != null ? " ": <h3><b>No se encontraron resultados</b></h3> no funcionó, se agrega msje en el style index.css*/}
 
             </div>
             <div >
-                    <Pagination pagina={pagina} setPagina={setPagina} maximo={maximo} />
+                <Pagination pagina={pagina} setPagina={setPagina} maximo={maximo} />
             </div>
         </>
     )
 }
-/*return (
-    <div className={styles.container}>
-        <div className={styles.containerPoke}>
-            {Pokemons.slice(
-                (pagina - 1) * porPagina,
-                (pagina - 1) * porPagina + porPagina
-            ).map((pokemon, i) => (
-                <div key={i} className={styles.pokeContainer}>
-                    <div className={styles.imgContainer}>
-                        <img src={pokemon.img} alt={pokemon.name} />
-                    </div>
-                    <p>{pokemon.name}</p>
-                </div>
-            ))}
-        </div>
-
-        <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
-    </div>
-);
-}*/

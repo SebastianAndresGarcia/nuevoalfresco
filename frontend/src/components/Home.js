@@ -10,18 +10,6 @@ export function Home() {
     const terminobusqueda = termino
     console.log("término de búsqueda recuperado useParams: " + terminobusqueda);
 
-   /* const [causas, setCausas] = useState()
-    useEffect(() => {
-        fetch('http://localhost:3000/getcausas')
-            .then(response => response.json())
-            .then(setCausas)
-    }, []) */
-
-    const abrirpdf = async (ubicacion) => {
-
-        window.open("http://127.0.0.1:8887/" + ubicacion, '_blank')
-        //window.location.href=`file:///C:/Users/hp/Documents/tecnicatura/nuevoalfresco/backend/`+ubicacion
-    }
     return (
         <>
             <Navigation></Navigation>
@@ -42,23 +30,7 @@ export function Home() {
                 </Card>
 
             </div>
-            {/*  <div className='Table'>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr><th>#</th><th>DNI</th><th>NOMBRE Y APELLIDO</th><th>UBICACIÓN</th></tr>
-                    </thead>
-                    <tbody>
-                        {causas?.map(causa => (
-                            <tr key={causa.id}>
-                                <td>{causa.id}</td>
-                                <td>{causa.dni}</td>
-                                <td>{causa.nombrecompleto}</td>
-                                <td><button type="button" class="btn btn-dark" onClick={() => abrirpdf(causa.ubicacion)}>VER CAUSA PDF</button></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                        </div> */}
+          
         </>
     )
 }
