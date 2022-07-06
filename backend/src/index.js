@@ -1,104 +1,60 @@
 const fs = require('fs');
+const path = require('path');
 const pdf = require('pdf-parse');
 const conexion = require('./db/mysqldb')
+const crypto = require('crypto');
+
 let i = 0;
 let sinnombre = 0;
-
-async function comenzar() {
-    fs.readdir('./pdf/causas', async (err, files) => {
+//let ruta = "./pdf/causas"
+module.exports=async function comenzar(ruta) {
+    fs.readdir(ruta, async (err, files) => {
         if (err) {
             console.log(err);
         }
-        console.log(files)
-        await leerpdf(files);
+        if (files)
+            // console.log(files)
+            await leerpdf(files, ruta);
 
     });
 }
-comenzar();
-async function leerpdf(files) {
-    const personas = [{ dni: "", nombrecompleto: "", ubicacion: "" }];
+//comenzar(ruta);  //esta línea se utilizó para realizar la carga por consola con comando node de las primeras 50mil causas
+
+async function leerpdf(files, ruta) {
+    const causas = [{ dni: "", nombrecompleto: "", ubicacion: "" }];
 
     let i = 0
     for (const file of files) {
         let dni = ""
         let nombrecompleto = ""
         let ubicacion = ""
-        let dataBuffer = fs.readFileSync(`./pdf/causas/${file}`);
+        let fecha = ""
+        let dataBuffer = fs.readFileSync(ruta + `/${file}`);
         try {
-            console.log("archivo: " + `./pdf/causas/${file}`)
+            console.log("archivo: " + ruta + `/${file}`)
             await pdf(dataBuffer).then(async function (data) {
                 dni = await buscardni(data);
                 nombrecompleto = await buscarnombreyapellido(data);
-                ubicacion = `./pdf/causas/${file}`; //console.log(dni + nombrecompleto + ubicacion)
-                //personas.push({ dni, nombrecompleto, ubicacion }); //console.log(personas)
-                if (dni != "" || nombrecompleto != "")
-                    await guardardb(dni, nombrecompleto, ubicacion);
+                ubicacion = `./pdf/causas/${file}`;
+                let guardadoenbd = false
+                if (dni != "" || nombrecompleto != "") {
+                    const hashSum = crypto.createHash('md5');
+                    hashSum.update(dataBuffer);
+                    let hashmd5 = hashSum.digest('hex');
+                    //console.log("hash: " + hashmd5);
+                    fecha = await obtenerfecha(data.info.CreationDate)
+                    guardadoenbd = await guardardb(dni, nombrecompleto, ubicacion, fecha, hashmd5);
+                }
+                 if (guardadoenbd) {
+                     guardarencarpeta(file, ruta)
+                 }
             });
         } catch (e) {
             console.log("error en fcion leerpdf")
         }
     }
     console.log("TERMINADO")
-    console.log("persona.length" + personas.length)
-
 }
-/*async function leerpdf(files) {
-    const personas = [{ dni: "", nombrecompleto: "", ubicacion: "" }];
-
-    for (let index = 0; index < files.length; index++) {
-
-        let dni = ""
-        let nombrecompleto = ""
-        let ubicacion = ""
-        let dataBuffer = fs.readFileSync(`./pdf/data/${files[index]}`);
-        let data = await pdfParser(dataBuffer)
-        if (data) {
-            dni = await buscardni(data);
-            nombrecompleto = await buscarnombreyapellido(data);
-            ubicacion = `./pdf/data/${files[index]}`; //console.log(dni + nombrecompleto + ubicacion)
-            if (dni != "" || nombrecompleto != "") {
-                let dni = ""
-                let nombrecompleto = ""
-                let ubicacion = ""
-                let dataBuffer = fs.readFileSync(`./pdf/data/${files[index]}`);
-                let data = await pdfParser(dataBuffer)
-                if (data) {
-                    dni = await buscardni(data);
-                    nombrecompleto = await buscarnombreyapellido(data);
-                    ubicacion = `./pdf/data/${files[index]}`; //console.log(dni + nombrecompleto + ubicacion)
-                    if (dni != "" || nombrecompleto != "") {
-                       await guardardb(dni, nombrecompleto, ubicacion)
-                    }
-                }
-            }
-        }
-    }
-    console.log("TERMINADO")
-    console.log("persona.legnth" + personas.length)
-} */
-
-
-
-/*
-pdf(dataBuffer).then(function (data) {
-    
-    // number of pages
-    console.log(data.numpages);
-    // number of rendered pages
-    console.log(data.numrender);
-    // PDF info
-    console.log(data.info);
-    // PDF metadata
-    console.log(data.metadata);
-    // PDF.js version
-    // check https://mozilla.github.io/pdf.js/getting_started/
-    console.log(data.version);
-    // PDF text
-    console.log("data text :" + data.text);
-    
-    buscardni(data);
-    buscarnombreyapellido(data);
-}); */
 
 async function buscardni(data) {
     const reg = /([\d]{1,2}\.?[\d]{3,3}\.?[\d]{3,3})(?![/])/g;
@@ -145,7 +101,7 @@ async function buscarnombreyapellido(data) {
 
 async function guardar(dni, nombrecompleto, ubicacion) {
     //for (let j = 1; j < personas.length; j++) {
-    console.log("dentro de fcion guardardb " + dni)
+    //console.log("dentro de fcion guardardb " + dni)
     //let values = []
     var sql = `INSERT INTO causas(dni, nombrecompleto, ubicacion) VALUES (${dni},${nombrecompleto},${ubicacion});`;
     let values = [dni, nombrecompleto, ubicacion];
@@ -155,9 +111,7 @@ async function guardar(dni, nombrecompleto, ubicacion) {
             console.log(err)
             throw err;
         }
-
         console.log("1 record inserted " + result);
-
     });
     // }
     /* conexion.end(function (err) {
@@ -168,19 +122,54 @@ async function guardar(dni, nombrecompleto, ubicacion) {
      });*/
 }
 
-const guardardb = async (dni, nombrecompleto, ubicacion) => new Promise((resolve, reject) => {
+const guardardb = async (dni, nombrecompleto, ubicacion, fecha, hashmd5) => new Promise((resolve, reject) => {
     i++
-    const sql = `INSERT INTO causas(dni, nombrecompleto, ubicacion) VALUES (?);`;
-    values = [dni, nombrecompleto, ubicacion];
+    let objetopersistido = false
+    const sql = `INSERT INTO causasbd(dni, nombrecompleto, ubicacion, fecha, hashmd5) VALUES (?);`;
+    values = [dni, nombrecompleto, ubicacion, fecha, hashmd5];
     try {
         console.log("llegó a fc BD")
         conexion.query(sql, [values], function (err, results, fields) {
-            if (err) console.error(err);
-            console.log("1 record inserted " + i + ")" + dni);
+            if (err) {
+                console.error(err);
+                objetopersistido = false
+            }
+            console.log("1 record inserted " + results + " - " + i + ")" + dni);
+            objetopersistido = true
+            return objetopersistido
         });
-    } catch (err) { 
-        console.log("entro al catch "+err) 
+    } catch (err) {
+        console.log("entro al catch " + err)
+        objetopersistido = false
+        return objetopersistido
     }
-    setTimeout(() => resolve("hecho"), 100); //le tuve que poner esto para que de tiempo a ejecutar el query, sino pasaba de largo y no guardaba nada en la bd
+
+    setTimeout(() => resolve("hecho"), 500); //le tuve que poner esto para que de tiempo a ejecutar el query, sino pasaba de largo y no guardaba nada en la bd
+
 });
 
+async function guardarencarpeta(file, ruta) {
+    const filename = path.basename(`${file}`);
+    // console.log(filename);
+    const currentPath = path.join(__dirname, '.' + ruta, `${file}`);
+    const destinationPath = path.join(__dirname, '../pdf/causas', `${file}`);
+
+    fs.rename(currentPath, destinationPath, (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log(`Successfully moved the file ${file}!`);
+    });
+}
+
+async function obtenerfecha(unformateddate) {
+    const reg = /^([\d]{4}\-[\d]{2}\-[\d]{2})$/g;
+    let fecha = "";
+    unformateddate = unformateddate.slice(2)
+    fecha = unformateddate.substring(0, 4) + "-" + unformateddate.substring(4, 6) + "-" + unformateddate.substring(6, 8);
+    if (reg.test(fecha)) {
+        return fecha;
+    } else {
+        return ""
+    }
+}

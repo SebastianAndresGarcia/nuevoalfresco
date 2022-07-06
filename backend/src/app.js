@@ -1,6 +1,25 @@
 const express = require('express')
 const routes = require('./rutas')
 const app = express()
+/*const multer = require('multer')
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './pdf/')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  },
+})
+
+const upload = multer({ storage: storage })
+
+app.post('/cargarnuevascausas', upload.array('archivos'), function (req, res) {
+  console.log(req.files)
+  res.send(console.log('archivos subidos correctamente'))
+})
+*/
+
 var cors = require('cors')
 app.use(cors())
 

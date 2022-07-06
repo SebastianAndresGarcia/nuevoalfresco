@@ -3,7 +3,7 @@ const conexion = require('../db/mysqldb')
 const getcausas = (req, res) => new Promise((resolve, reject) => {
     const personas = [];
 
-    conexion.query("SELECT * FROM causas", function (err, results, fields) {
+    conexion.query("SELECT * FROM causasbd", function (err, results, fields) {
 
         results.forEach((result) => {
             personas.push(JSON.parse(JSON.stringify(result)))
@@ -26,25 +26,27 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
     var arrayDenombre = [] = nombrecompleto.split(" ");
 
     if (arrayDenombre.length <= 1) {
-        try{
-        conexion.query("SELECT * FROM causas WHERE dni = ? OR nombrecompleto LIKE '%" + nombrecompleto + "%'", [dni], function (err, results, fields) {
+        try {
+            console.log("entró")
+            conexion.query("SELECT * FROM causasbd WHERE dni = ? OR nombrecompleto LIKE '%" + nombrecompleto + "%' ORDER BY fecha DESC;", [dni], function (err, results, fields) {
 
-            results.forEach((result) => {
-                personas.push(JSON.parse(JSON.stringify(result)))
-            })
-            if (err) console.error(err);
-            //console.log('User Query Results: ', results);
-            res.status(200).send(personas)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
-            console.log(personas)
-        });
-    }catch(err){
-        console.log(err)
-    }
+                results.forEach((result) => {
+                    personas.push(JSON.parse(JSON.stringify(result)))
+                })
+                if (err) console.error(err);
+                //console.log('User Query Results: ', results);
+                res.status(200).send(personas)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
+                console.log(personas)
+            });
+        } catch (err) {
+            console.log(err)
+        }
     } else {
-        let sql = "SELECT * FROM causas WHERE nombrecompleto LIKE '%" + arrayDenombre[0] + "%' ";
+        let sql = "SELECT * FROM causasbd  WHERE nombrecompleto LIKE '%" + arrayDenombre[0] + "%' ";
         for (let i = 1; i < arrayDenombre.length; i++) {
             sql = sql + "AND nombrecompleto LIKE '%" + arrayDenombre[i] + "%' "
         }
+        sql=sql+"ORDER BY fecha DESC;"
         //console.log("sqlquery: "+sql)
         try {
             conexion.query(sql, function (err, results, fields) {
@@ -91,3 +93,10 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
 exports.getcausasporbusqueda = getcausasporbusqueda;
 
 
+const cargarnuevascausas = (req, res) => new Promise((resolve, reject) => {
+    console.log(req.files)
+    res.send(console.log('archivos subidos correctamente'))
+    var guardarcausas = require('../index.js')
+    guardarcausas('./pdf/nuevascausas')
+});
+exports.cargarnuevascausas = cargarnuevascausas;
