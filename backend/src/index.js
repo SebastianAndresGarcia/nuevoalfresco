@@ -136,6 +136,7 @@ const guardardb = async (dni, nombrecompleto, ubicacion, fecha, hashmd5) => new 
             }
             console.log("1 record inserted " + results + " - " + i + ")" + dni);
             objetopersistido = true
+            
             return objetopersistido
         });
     } catch (err) {
@@ -145,7 +146,7 @@ const guardardb = async (dni, nombrecompleto, ubicacion, fecha, hashmd5) => new 
     }
 
     setTimeout(() => resolve("hecho"), 500); //le tuve que poner esto para que de tiempo a ejecutar el query, sino pasaba de largo y no guardaba nada en la bd
-
+    
 });
 
 async function guardarencarpeta(file, ruta) {

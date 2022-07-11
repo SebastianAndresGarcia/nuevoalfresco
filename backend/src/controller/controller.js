@@ -1,14 +1,14 @@
-const conexion = require('../db/mysqldb')
+const pool = require('../db/mysqldb')
 
 const getcausas = (req, res) => new Promise((resolve, reject) => {
     const personas = [];
 
-    conexion.query("SELECT * FROM causasbd", function (err, results, fields) {
+    pool.query("SELECT * FROM causasbd", function (err, results, fields) {
 
         results.forEach((result) => {
             personas.push(JSON.parse(JSON.stringify(result)))
         })
-        if (err) console.error(err);
+        if (err) console.error(err); 
         //console.log('User Query Results: ', results);
         res.send(personas)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
         console.log(personas)
@@ -19,7 +19,6 @@ exports.getcausas = getcausas;
 
 const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
     const personas = [];
-    const personasresult = [];
     const dni = (req.params.termino);
     console.log(req.params.termino);
     const nombrecompleto = (req.params.termino);
@@ -28,7 +27,7 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
     if (arrayDenombre.length <= 1) {
         try {
             console.log("entró")
-            conexion.query("SELECT * FROM causasbd WHERE dni = ? OR nombrecompleto LIKE '%" + nombrecompleto + "%' ORDER BY fecha DESC;", [dni], function (err, results, fields) {
+            pool.query("SELECT * FROM causasbd WHERE dni = ? OR nombrecompleto LIKE '%" + nombrecompleto + "%' ORDER BY fecha DESC;", [dni], function (err, results, fields) {
 
                 results.forEach((result) => {
                     personas.push(JSON.parse(JSON.stringify(result)))
@@ -37,6 +36,7 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
                 //console.log('User Query Results: ', results);
                 res.status(200).send(personas)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
                 console.log(personas)
+                
             });
         } catch (err) {
             console.log(err)
@@ -49,7 +49,7 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
         sql=sql+"ORDER BY fecha DESC;"
         //console.log("sqlquery: "+sql)
         try {
-            conexion.query(sql, function (err, results, fields) {
+            pool.query(sql, function (err, results, fields) {
                 results.forEach((result) => {
                     personas.push(JSON.parse(JSON.stringify(result)))
                 })
@@ -57,13 +57,14 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
                 //console.log('User Query Results: ', results);
                 res.status(200).send(personas)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
                 console.log(personas)
+                
             });
         } catch (err) {
             console.log(err)
         }
         /*
         console.log("cantidad de palabras de nombre " + arrayDenombre.length);
-        conexion.query("SELECT * FROM causas", function (err, results, fields) {
+        pool.query("SELECT * FROM causas", function (err, results, fields) {
 
             results.forEach((result) => {
                 personas.push(JSON.parse(JSON.stringify(result)))
@@ -92,6 +93,19 @@ const getcausasporbusqueda = (req, res) => new Promise((resolve, reject) => {
 });
 exports.getcausasporbusqueda = getcausasporbusqueda;
 
+const cantidaddecausas = (req, res) => new Promise((resolve, reject) => {
+    const cantidad=[]
+    pool.query("SELECT COUNT(*) as cantidad FROM causasbd", function (err, results, fields) {
+        results.forEach((result) => {
+            cantidad.push(JSON.parse(JSON.stringify(result)))
+        })
+        if (err) console.error(err); 
+        //console.log('User Query Results: ', results);
+        res.send(cantidad)  //devuelve como resultado un json porque yo así lo especifiqué en la línea 5 de index.ts
+        console.log(cantidad)
+    });
+});
+exports.cantidaddecausas = cantidaddecausas;
 
 const cargarnuevascausas = (req, res) => new Promise((resolve, reject) => {
     console.log(req.files)

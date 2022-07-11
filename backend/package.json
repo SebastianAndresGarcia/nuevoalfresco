@@ -1,5 +1,5 @@
 {
-    "name": "pdf-parse",
+    "name": "backend-causasenufis",
     "version": "1.1.1",
     "description": "leer pdf y extraer nombre completo y dni para almacenar en mysql",
     "main": "index.js",
@@ -43,19 +43,5 @@
         "dev": "nodemon src/app.js",
         "test": "node node_modules/mocha/bin/_mocha --recursive --slow 10000",
         "start": "node src/index.js"
-    },
-    "homepage": "https://gitlab.com/autokent/pdf-parse",
-    "bugs": {
-        "url": "https://gitlab.com/autokent/pdf-parse/issues",
-        "email": "mehmet.kozan@live.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://gitlab.com/autokent/pdf-parse.git"
-    },
-    "author": "Mehmet Kozan <mehmet.kozan@live.com>",
-    "license": "MIT",
-    "engines": {
-        "node": ">=6.8.1"
     }
 }
