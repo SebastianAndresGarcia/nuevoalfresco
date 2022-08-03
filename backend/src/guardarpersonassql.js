@@ -21,4 +21,4 @@ async function guardarpersona(dni, nombre, ubicacion) {
 }
 
 
-module.exports = { guardarpersona };
+module.exports = { guardarpersona }; 
