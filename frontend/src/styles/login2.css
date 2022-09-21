@@ -1,0 +1,20 @@
+.login {
+    padding-left: 9%;
+    padding-right: 9%;
+    box-sizing: border-box;   
+}
+
+.image {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    background-image: url("../assets/images/portada.jpg");
+    background-size: 65% 100%, cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

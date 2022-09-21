@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3002/api/auth/";
+const API_URL = "http://172.17.17.22:3000/api/auth/";
 
-const register = (username, email, password) => {
+const register = (username,  password) => {
+  console.log("llegó a register")
   return axios.post(API_URL + "signup", {
     username,
-    email,
-    password,
+    password
   });
 };
 
@@ -14,7 +14,7 @@ const login = (username, password) => {
   return axios
     .post(API_URL + "signin", {
       username,
-      password,
+      password
     })
     .then((response) => {
       if (response.data.accessToken) {
@@ -26,7 +26,8 @@ const login = (username, password) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+   console.log("en fcion logout remove user")
+   localStorage.removeItem("user");
 };
 
 const getCurrentUser = () => {

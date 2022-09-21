@@ -103,12 +103,12 @@ export function Navigation() {
 
                             <>
                                 <Nav.Link href="/login" onClick={logOut}>
-                                    LogOut
+                                    Cerrar sesión
                                 </Nav.Link></>
 
                         ) : (
                             <><Nav.Link href="/login">
-                                Login
+                                Iniciar sesión
                             </Nav.Link>
                                                             </>
                         )}

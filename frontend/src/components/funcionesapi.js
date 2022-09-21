@@ -20,14 +20,14 @@ export async function buscarcausas(termino){
 }
 
 export async function signup(user){
-	let urlServer = 'http://localhost:3002/api/auth/signup';
+	let urlServer = 'http://172.17.17.22:3000/api/auth/signup';
 	let method = 'POST';
 	let status;
 	console.log("usuario en fcion ",user)
 	let respuesta=await fetch(urlServer, { 
 		"method": method,
 		"body": JSON.stringify(user),
-		"headers": {
+		"headers": { 
 			"Content-type": 'application/json'
 		},
 		mode:'cors'
@@ -38,7 +38,7 @@ export async function signup(user){
 	return {message: respuesta.message, status: status}
 }
 export async function signin(user){
-	let urlServer = 'http://localhost:3002/api/auth/signin';
+	let urlServer = 'http://172.17.17.22:3000/api/auth/signin';
 	let method = 'POST';
 	let status
 	let respuesta=await fetch(urlServer, { 
@@ -58,6 +58,7 @@ export async function signin(user){
 }
 
 export async function cantidaddecausas(){
+	
 	let urlServer = 'http://172.17.17.22:3000/cantidaddecausas';
 	let response = await fetch(urlServer, {
 		method: 'GET',
@@ -67,8 +68,9 @@ export async function cantidaddecausas(){
 		},
         mode: 'cors',
 	});
-
+	
 	let respuesta = await response.json()
-	//console.log(respuesta)
+	console.log("respuesta",respuesta)
+	
 	return respuesta
 }

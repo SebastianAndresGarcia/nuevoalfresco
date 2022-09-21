@@ -12,7 +12,7 @@ const Signup = () => {
   const form = useRef();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  //const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
@@ -26,16 +26,17 @@ const Signup = () => {
     const password = e.target.value;
     setPassword(password);
   };
-  const onChangeEmail = (e) => {
+ /* const onChangeEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
-  };
+  }; */
 
   const handleRegister = (e) => {
+    console.log("llegó a registrar")
     e.preventDefault();
     setMessage("");
     setLoading(true);
-    AuthService.register(username, email, password).then(
+    AuthService.register(username, password).then(
       (response) => {
         setMessage(response.data.message);
         setSuccessful(true);
@@ -43,8 +44,6 @@ const Signup = () => {
         navigate("/Login");
         window.location.reload();
       },
-
-
       (error) => {
         const resMessage =
           (error.response &&
@@ -92,7 +91,7 @@ const Signup = () => {
                         />
                       </div>
 
-                      <div className="form-group">
+                    {/*  <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <Form.Control
                           type="text"
@@ -102,7 +101,7 @@ const Signup = () => {
                           onChange={onChangeEmail}
                           required
                         />
-                      </div>
+                  </div> */}
 
                       <div className="form-group">
                         <label htmlFor="password">Password</label>
