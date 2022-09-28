@@ -70,30 +70,30 @@ const Login2 = () => {
                         </Row>
                         <Row >
                             <Col className="" sm={12} >
-                                <Form >
+                                <Form onSubmit={handleLogin} >
+                                    <Form.Group>
+                                        <Row style={{ margin: "10%" }}>
+                                            <Form.Control
+                                                type="text" placeholder="Usuario" name='username' value={username}
+                                                onChange={onChangeUsername}
+                                                required
+                                            ></Form.Control>
+                                        </Row>
 
-                                    <Row style={{ margin: "10%"}}>
-                                        <Form.Control
-                                            type="text" placeholder="Usuario" name='username' value={username}
-                                            onChange={onChangeUsername}
-                                            required
-                                        ></Form.Control>
-                                    </Row>
-
-                                    <Row style={{ margin: "10%" }}>
-                                        <Form.Control
-                                            type="password" placeholder="Contrasenia" value={password}
-                                            onChange={onChangePassword}
-                                            required
-                                        ></Form.Control>
-                                    </Row>
-                                    <Row className="" align="center" >
-                                        <Col className="d-grid gap-2"  style={{ marginLeft: "10%",marginRight: "10%" }}>
-                                            <Button className="btn btn-success" type="submit">
-                                                Ingresar
-                                            </Button></Col>
-                                        
-                                    </Row>
+                                        <Row style={{ margin: "10%" }}>
+                                            <Form.Control
+                                                type="password" placeholder="Contrasenia" value={password}
+                                                onChange={onChangePassword}
+                                                required
+                                            ></Form.Control>
+                                        </Row>
+                                        <Row className="" align="center" >
+                                            <Col className="d-grid gap-2" style={{ marginLeft: "10%", marginRight: "10%" }}>
+                                                <Button className="btn btn-success" type="onSubmit">
+                                                    Ingresar
+                                                </Button></Col>
+                                        </Row>
+                                    </Form.Group>
                                 </Form>
                             </Col>
                         </Row>

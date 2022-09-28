@@ -1,10 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Button, Row, Card, Col, Form } from 'react-bootstrap';
 import '../styles/login.scss'
-
 import AuthService from "../services/auth.service";
-
+import { Navigation } from './Navigation';
 
 const Signup = () => {
   const currentUser = AuthService.getCurrentUser();
@@ -17,6 +16,22 @@ const Signup = () => {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    verificarUsuario()
+}, []);
+
+const verificarUsuario = async () => {
+    if (currentUser) {
+        if (!currentUser.roles.includes("ROLE_ADMIN")) {
+            navigate('/home')
+            window.location.reload()
+        }
+    } else {
+        navigate('/home')
+        window.location.reload()
+    }
+}
+
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
@@ -26,10 +41,10 @@ const Signup = () => {
     const password = e.target.value;
     setPassword(password);
   };
- /* const onChangeEmail = (e) => {
-    const email = e.target.value;
-    setEmail(email);
-  }; */
+  /* const onChangeEmail = (e) => {
+     const email = e.target.value;
+     setEmail(email);
+   }; */
 
   const handleRegister = (e) => {
     console.log("llegó a registrar")
@@ -41,7 +56,7 @@ const Signup = () => {
         setMessage(response.data.message);
         setSuccessful(true);
         alert("usuario registrado correctamente")
-        navigate("/Login");
+        navigate("/login2");
         window.location.reload();
       },
       (error) => {
@@ -61,12 +76,11 @@ const Signup = () => {
 
   return (
     <>
-
       {currentUser ? (
-        <div style={{ display:"flex", justifyContent: "center", backgroundColor: 'aqua' }} className="col-md-12">
-          <Row style={{ display: "flex", justifyContent: "center"}}>
-            <div style={{ margin:"5px", display: "flex"}}>
-            <Button variant="success" href='/home'>Volver</Button>
+        <div style={{ display: "flex", justifyContent: "center", backgroundColor: 'aqua' }} className="col-md-12">
+          <Row style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ margin: "5px", display: "flex" }}>
+              <Button variant="success" href='/home'>Volver</Button>
             </div>
             <Card style={{ width: '18rem', margin: '10px' }}>
 
@@ -91,17 +105,6 @@ const Signup = () => {
                         />
                       </div>
 
-                    {/*  <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <Form.Control
-                          type="text"
-                          className="form-control"
-                          name="email"
-                          value={email}
-                          onChange={onChangeEmail}
-                          required
-                        />
-                  </div> */}
 
                       <div className="form-group">
                         <label htmlFor="password">Password</label>
@@ -138,7 +141,9 @@ const Signup = () => {
             </Card>
           </Row>
         </div >
-      ) : <h1>Necesita permiso de administrador para registrar usuarios. Por favor inicie sesión</h1>}
+      ) : <><Navigation></Navigation><h1>Necesita permiso de administrador para registrar usuarios. Por favor inicie sesión</h1></>
+                      }
+      
     </>
   )
 }

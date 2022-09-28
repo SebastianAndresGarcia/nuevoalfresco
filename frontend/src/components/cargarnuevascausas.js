@@ -3,12 +3,31 @@ import { useParams } from 'react-router-dom';
 import { Button, Row, Alert } from 'react-bootstrap';
 import { Navigation } from './Navigation';
 import AuthService from '../services/auth.service';
+import UserService from '../services/user.service';
+import { useNavigate } from 'react-router-dom';
 
 export function Cargarnuevascausas() {
     //https://stackoverflow.com/questions/65548792/how-to-upload-multiple-file-with-react-node-and-multer
     const [archivos, setArchivos] = useState(null)
     const [status, setStatus] = useState(false)
-    const currentUser=AuthService.getCurrentUser()
+    const currentUser = AuthService.getCurrentUser()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        verificarUsuario()
+    }, []);
+
+    const verificarUsuario = async () => {
+        if (currentUser) {
+            if (!currentUser.roles.includes("ROLE_ADMIN")) {
+                navigate('/home')
+                window.location.reload()
+            }
+        } else {
+            navigate('/home')
+            window.location.reload()
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()

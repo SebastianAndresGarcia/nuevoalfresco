@@ -31,9 +31,13 @@ export function Home() {
             } catch (e) {
                 console.log(e)
                 AuthService.logout()
-                navigate('/login')
+                navigate('/login2')
                 window.location.reload()
             }
+        } else {
+            AuthService.logout()
+            navigate('/login2')
+            window.location.reload()
         }
 
     }

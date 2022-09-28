@@ -15,10 +15,8 @@ export function Navigation() {
     const [currentUser, setCurrentUser] = useState(undefined);
     useEffect(() => {
         const user = AuthService.getCurrentUser();
-
         if (user) {
             setCurrentUser(user);
-
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
 
@@ -33,14 +31,12 @@ export function Navigation() {
 
     const logOut = () => {
         AuthService.logout();
-
         setShowAdminBoard(false);
         setCurrentUser(undefined);
     };
 
     const [datos, setDatos] = useState({
         termino: '',
-
     })
     const handleInputChange = (event) => {
         // console.log(event.target.name)
@@ -102,15 +98,15 @@ export function Navigation() {
                         {currentUser ? (
 
                             <>
-                                <Nav.Link href="/login" onClick={logOut}>
+                                <Nav.Link href="/login2" onClick={logOut}>
                                     Cerrar sesión
                                 </Nav.Link></>
 
                         ) : (
-                            <><Nav.Link href="/login">
+                            <><Nav.Link href="/login2">
                                 Iniciar sesión
                             </Nav.Link>
-                                                            </>
+                            </>
                         )}
                     </Navbar.Collapse>
                 </Container>
