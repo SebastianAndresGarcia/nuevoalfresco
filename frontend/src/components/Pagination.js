@@ -56,8 +56,8 @@ export const Pagination = ({ pagina, setPagina, maximo }) => {
     </div> */}
             <div style={{display: "flex", justifyContent:"center"}}>
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                    <p ><button style={{ border: "none" }} disabled={pagina === 1 || pagina < 1} onClick={previousPage}><li class="page-item"><a class="page-link" >Previous</a></li></button>
+                    <ul className="pagination">
+                    <p ><button style={{ border: "none" }} disabled={pagina === 1 || pagina < 1} onClick={previousPage}><li className="page-item"><a className="page-link" >Previous</a></li></button>
                         <input style={{ textAlign:"center", maxWidth : "70px", margin:"4px"}}
                             onChange={e => onChange(e)}
                             onKeyDown={e => onKeyDown(e)}
@@ -65,7 +65,7 @@ export const Pagination = ({ pagina, setPagina, maximo }) => {
                             autoComplete="off"
                             value={input}
                         /> de {maximo} 
-                        <button style={{ border: "none", margin:"4px" }} disabled={pagina === Math.ceil(maximo) || pagina > Math.ceil(maximo)} onClick={nextPage}><li class="page-item" ><a class="page-link" >Next</a></li></button>
+                        <button style={{ border: "none", margin:"4px" }} disabled={pagina === Math.ceil(maximo) || pagina > Math.ceil(maximo)} onClick={nextPage}><li className="page-item" ><a className="page-link" >Next</a></li></button>
                         </p>
                     </ul>
                 </nav>

@@ -1,6 +1,8 @@
+const config = require("../config/config.js");
+
 export async function buscarcausas(termino){
 	//let urlServer = 'http://localhost:3000/getcausasporbusqueda/'+termino;
-	let urlServer = 'http://172.17.17.22:3000/getcausasporbusqueda/' + termino;
+	let urlServer = 'http://'+config.HOST+':3000/getcausasporbusqueda/' + termino;
 	let response = await fetch(urlServer, {
 		method: 'GET',
         headers: {
@@ -20,7 +22,7 @@ export async function buscarcausas(termino){
 }
 
 export async function signup(user){
-	let urlServer = 'http://172.17.17.22:3000/api/auth/signup';
+	let urlServer = 'http://'+config.HOST+':3000/api/auth/signup';
 	let method = 'POST';
 	let status;
 	console.log("usuario en fcion ",user)
@@ -38,7 +40,7 @@ export async function signup(user){
 	return {message: respuesta.message, status: status}
 }
 export async function signin(user){
-	let urlServer = 'http://172.17.17.22:3000/api/auth/signin';
+	let urlServer = 'http://'+config.HOST+':3000/api/auth/signin';
 	let method = 'POST';
 	let status
 	let respuesta=await fetch(urlServer, { 
@@ -59,7 +61,7 @@ export async function signin(user){
 
 export async function cantidaddecausas(){
 	
-	let urlServer = 'http://172.17.17.22:3000/cantidaddecausas';
+	let urlServer = 'http://'+config.HOST+':3000/cantidaddecausas';
 	let response = await fetch(urlServer, {
 		method: 'GET',
         headers: {

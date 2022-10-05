@@ -1,13 +1,20 @@
+const db = require("./models/index")
+const Causas = require("./models/causa.model")(db.sequelize, db.Sequelize)
+const { Op } = require("sequelize");
+const { sequelize, Sequelize } = require("./models/index");
+const { QueryTypes } = require('sequelize');
+
 const fs = require('fs');
 const path = require('path');
 const pdf = require('pdf-parse');
-const conexion = require('./db/mysqldb')
+//const conexion = require('./db/mysqldb')
+const conexion = require("./config/db.config.js");
 const crypto = require('crypto');
 
 let i = 0;
 let sinnombre = 0;
 //let ruta = "./pdf/causas"
-module.exports=async function comenzar(ruta) {
+module.exports = async function comenzar(ruta) {
     fs.readdir(ruta, async (err, files) => {
         if (err) {
             console.log(err);
@@ -45,9 +52,9 @@ async function leerpdf(files, ruta) {
                     fecha = await obtenerfecha(data.info.CreationDate)
                     guardadoenbd = await guardardb(dni, nombrecompleto, ubicacion, fecha, hashmd5);
                 }
-                 if (guardadoenbd) {
-                     guardarencarpeta(file, ruta)
-                 }
+                if (guardadoenbd) {
+                    guardarencarpeta(file, ruta)
+                }
             });
         } catch (e) {
             console.log("error en fcion leerpdf")
@@ -125,35 +132,41 @@ async function guardar(dni, nombrecompleto, ubicacion) {
 const guardardb = async (dni, nombrecompleto, ubicacion, fecha, hashmd5) => new Promise((resolve, reject) => {
     i++
     let objetopersistido = false
-    const sql = `INSERT INTO causasbd(dni, nombrecompleto, ubicacion, fecha, hashmd5) VALUES (?);`;
+    const sql = `INSERT INTO causas(dni, nombrecompleto, ubicacion, fecha, hashmd5) VALUES (?);`;
     values = [dni, nombrecompleto, ubicacion, fecha, hashmd5];
-    try {
-        console.log("llegó a fc BD")
-        conexion.query(sql, [values], function (err, results, fields) {
-            if (err) {
-                console.error(err);
-                objetopersistido = false
-            }
-            console.log("1 record inserted " + results + " - " + i + ")" + dni);
-            objetopersistido = true
-            
-            return objetopersistido
-        });
-    } catch (err) {
-        console.log("entro al catch " + err)
-        objetopersistido = false
-        return objetopersistido
-    }
+    /*try{
+    const causa = Causas.build({ values });
+    await causa.save();
+    console.log("1 record inserted " + results + " - " + i + ")" + dni);
+    }*/
+     try { 
+         console.log("llegó a fc BD")
+          sequelize.query(sql, {replacements: [values],
+          type: QueryTypes.SELECT}, function (err) {
+             if (err) {
+                 console.error(err);
+                 objetopersistido = false
+             }
+             console.log("1 record inserted  - " + i + ")" + dni);
+             objetopersistido = true
+             
+             return objetopersistido
+         });
+     } catch (err) {
+         console.log("entro al catch " + err)
+         objetopersistido = false
+         return objetopersistido
+     } 
 
     setTimeout(() => resolve("hecho"), 500); //le tuve que poner esto para que de tiempo a ejecutar el query, sino pasaba de largo y no guardaba nada en la bd
-    
+
 });
 
 async function guardarencarpeta(file, ruta) {
     const filename = path.basename(`${file}`);
     // console.log(filename);
     const currentPath = path.join(__dirname, '.' + ruta, `${file}`);
-    const destinationPath = path.join(__dirname, '../pdf/causas', `${file}`);
+    const destinationPath = path.join(__dirname, '../pdf/causasprueba', `${file}`);
 
     fs.rename(currentPath, destinationPath, (err) => {
         if (err) {

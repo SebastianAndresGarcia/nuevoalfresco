@@ -1,6 +1,7 @@
 import axios from "axios";
+const config = require("../config/config.js");
 
-const API_URL = "http://172.17.17.22:3000/api/auth/";
+const API_URL = "http://"+config.HOST+":3000/api/auth/";
 
 const register = (username,  password) => {
   console.log("llegó a register")

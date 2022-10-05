@@ -6,6 +6,7 @@ import { Pagination } from './Pagination';
 import '../styles/App.css'
 import { buscarcausas } from './funcionesapi';
 import AuthService from "../services/auth.service";
+import config from '../config/config';
 
 export function Resultadobusqueda() {
     const currentUser = AuthService.getCurrentUser();
@@ -52,7 +53,7 @@ export function Resultadobusqueda() {
 
     const abrirpdf = async (ubicacion) => {
 
-        window.open("http://172.17.17.22:8887/" + ubicacion, '_blank')
+        window.open("http://"+config.HOST+":8887/" + ubicacion, '_blank')
         //window.location.href=`file:///C:/Users/hp/Documents/tecnicatura/nuevoalfresco/backend/`+ubicacion
     }
     if (loading) {
@@ -81,7 +82,7 @@ export function Resultadobusqueda() {
                                     <td>{causa.nombrecompleto}</td>
                                     <td>{causa.ubicacion}</td>
                                     <td>{formatDate(causa.fecha)}</td>
-                                    <td><button type="button" class="btn btn-dark" onClick={() => abrirpdf(causa.ubicacion)}>VER CAUSA PDF</button>
+                                    <td><button type="button" className="btn btn-dark" onClick={() => abrirpdf(causa.ubicacion)}>VER CAUSA PDF</button>
                                     </td>
                                 </tr>
                             ))}

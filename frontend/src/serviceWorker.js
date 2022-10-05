@@ -9,9 +9,9 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
-
+const config = require("./config/config.js");
 const isLocalhost = Boolean(
-  window.location.hostname === '172.17.17.22' ||
+  window.location.hostname === config.HOST ||
     // [::1] is the IPv6 localhost address.
     window.location.hostname === '[::1]' ||
     // 127.0.0.0/8 are considered localhost for IPv4.

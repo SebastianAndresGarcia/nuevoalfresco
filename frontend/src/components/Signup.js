@@ -76,7 +76,6 @@ const verificarUsuario = async () => {
 
   return (
     <>
-      {currentUser ? (
         <div style={{ display: "flex", justifyContent: "center", backgroundColor: 'aqua' }} className="col-md-12">
           <Row style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ margin: "5px", display: "flex" }}>
@@ -141,9 +140,7 @@ const verificarUsuario = async () => {
             </Card>
           </Row>
         </div >
-      ) : <><Navigation></Navigation><h1>Necesita permiso de administrador para registrar usuarios. Por favor inicie sesión</h1></>
-                      }
-      
+            
     </>
   )
 }

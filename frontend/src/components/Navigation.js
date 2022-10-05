@@ -79,8 +79,8 @@ export function Navigation() {
 
                         </Nav>
                         {currentUser ? (<Form className="form-inline my-2 my-lg-0" onSubmit={enviarDatos}>
-                            <div class="row">
-                                <div class="col">
+                            <div className="row">
+                                <div className="col">
                                     <Form.Control
                                         type="search"
                                         placeholder="Search"
@@ -90,7 +90,7 @@ export function Navigation() {
                                         name="termino"
 
                                     /></div>
-                                <div class="col"> <Button className="btn btn-success my-2 my-sm-0" type="submit" variant="success" >Buscar Causas</Button></div>
+                                <div className="col"> <Button className="btn btn-success my-2 my-sm-0" type="submit" variant="success" >Buscar Causas</Button></div>
                             </div>
 
                         </Form>) : ""}
